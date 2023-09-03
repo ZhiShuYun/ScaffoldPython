@@ -9,6 +9,9 @@ class BaseHandler(tornado.web.RequestHandler):
     def set_default_headers(self):
         self.set_header("Content-Type", 'application/json')
 
+    def write_json(self, data):
+        self.write(json.dumps(data))
+
     def write_error(self, status_code, **kwargs):
         exception = None
         if "exc_info" in kwargs:
