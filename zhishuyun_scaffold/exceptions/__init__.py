@@ -1,5 +1,5 @@
+from .base import APIException
 from .bad_request import BadRequestException
-from .forward import ForwardException
 from .too_many_requests import TooManyRequestsException
 from .no_token import NoTokenException
 from .invalid_token import InvalidTokenException

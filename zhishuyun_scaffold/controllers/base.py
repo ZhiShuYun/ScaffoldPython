@@ -7,7 +7,7 @@ from zhishuyun_scaffold.settings import ERROR_CODE_API_ERROR, \
     ERROR_DETAIL_API_ERROR, ERROR_DETAIL_NOT_FOUND
 import asyncio
 import tornado
-from zhishuyun_scaffold.handlers.health import HealthHandler
+from zhishuyun_scaffold.handlers import HealthHandler, ErrorHandler
 
 
 class BaseController(object):
@@ -16,7 +16,9 @@ class BaseController(object):
         self.id = str(uuid4())
         self.application = tornado.web.Application([
             (r"/health", HealthHandler),
-        ])
+        ], settings={
+            'default_handler_class': ErrorHandler,
+        })
 
     def add_handler(self, path, handler):
         self.application.add_handlers(

@@ -1,5 +1,5 @@
-from rest_framework.exceptions import APIException
 from rest_framework import status
+from .base import APIException
 
 
 class TooManyRequestsException(APIException):

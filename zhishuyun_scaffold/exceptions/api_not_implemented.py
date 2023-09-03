@@ -1,4 +1,4 @@
-from rest_framework.exceptions import APIException
+from .base import APIException
 from django.utils.translation import gettext_lazy as _
 from rest_framework import status
 
