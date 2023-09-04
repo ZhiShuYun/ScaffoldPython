@@ -2,6 +2,7 @@ import tornado
 from loguru import logger
 from zhishuyun_scaffold.exceptions import APIException
 import json
+from zhishuyun_scaffold.settings import ERROR_CODE_UNKNOWN
 
 
 class BaseHandler(tornado.web.RequestHandler):
@@ -26,7 +27,13 @@ class BaseHandler(tornado.web.RequestHandler):
             self.write(json.dumps(result))
             self.finish()
         else:
-            super().write_error(status_code, **kwargs)
+            result = {
+                'code': ERROR_CODE_UNKNOWN,
+                'detail': str(exception),
+            }
+            self.set_status(500)
+            self.write(json.dumps(result))
+            self.finish()
 
     def initialize_trace_id(self):
         trace_id = self.request.query_arguments.get('trace_id')
