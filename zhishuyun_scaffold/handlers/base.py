@@ -17,7 +17,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.set_header("Content-Type", 'application/json')
 
     def write_json(self, data_json):
-        self.write(json.dumps(data_json))
+        self.write(json.dumps(data_json, ensure_ascii=False))
 
     def write_success(self, success_json):
         success_json['success'] = True
@@ -56,7 +56,8 @@ class BaseHandler(tornado.web.RequestHandler):
             response = requests.post(self.callback_url, json=error_json)
             logger.debug(f'{self.trace_id} callback response {response}')
         else:
-            self.set_status(exception.status_code)
+            self.set_status(exception.status_code if hasattr(
+                exception, 'status_code') else 500)
             self.write_json(error_json)
             self.finish()
             logger.debug(f'{self.trace_id} write error {error_json}')
@@ -79,6 +80,9 @@ class BaseHandler(tornado.web.RequestHandler):
             if callback_url:
                 self.async_mode = True
                 self.callback_url = callback_url
+            else:
+                self.async_mode = False
+                self.callback_url = None
         except Exception:
             pass
 
