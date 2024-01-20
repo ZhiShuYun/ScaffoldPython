@@ -6,6 +6,7 @@ env.read_env()
 HTTP_HOST = env.str('HTTP_HOST', '0.0.0.0')
 HTTP_PORT = env.int('HTTP_PORT', 8000)
 
+GATEWAY_SERVER_URL = env.str('GATEWAY_SERVER_URL', 'http://data-gateway:8000')
 
 ERROR_CODE_API_ERROR = 'api_error'
 ERROR_CODE_UNKNOWN = 'unknown'
