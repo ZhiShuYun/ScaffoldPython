@@ -32,7 +32,7 @@ class BaseHandler(tornado.web.RequestHandler):
         record_url = urljoin(GATEWAY_SERVER_URL, '/record')
         logger.debug(f'{self.trace_id} record url {record_url}')
         data = {
-            **data,
+            'status': data.get('status'),
             'trace_id': self.trace_id,
             'application_id': self.application_id,
             'metadata': {
